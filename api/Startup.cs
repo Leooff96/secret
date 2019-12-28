@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -17,22 +17,7 @@ namespace api
     {
         public Startup(IHostingEnvironment env)
         {
-            var builder = new ConfigurationBuilder()
-                .SetBasePath(env.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{ env.EnvironmentName}.json", optional: true);
-
-            if (Directory.Exists("/etc/secret-volume"))
-            {
-                builder.AddJsonFile("/etc/secret-volume/mysecretconfig", true);
-                Console.WriteLine("/etc/secret-volume");
-            }
-
-            builder.AddEnvironmentVariables();
-            Configuration = builder.Build();
-
-            Console.WriteLine(Configuration["Secret"]);
-            Console.WriteLine(Configuration.ToString());
+            
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -46,8 +31,6 @@ namespace api
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            
-
             app.UseMvc();
         }
     }
