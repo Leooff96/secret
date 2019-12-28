@@ -31,6 +31,8 @@ namespace api
             Configuration = builder.Build();
 
             Console.WriteLine(Configuration["Secret"]);
+            
+            var path = Environment.GetEnvironmentVariable("SECRET_USERNAME");
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
