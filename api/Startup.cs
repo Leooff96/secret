@@ -30,9 +30,10 @@ namespace api
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
 
-            Console.WriteLine(Configuration["Secret"]);
+            Console.WriteLine("Secret: {0}",Configuration["Secret"]);
             
             var path = Environment.GetEnvironmentVariable("SECRET_USERNAME");
+            Console.WriteLine("Username: {0}",path);
         }
 
         // This method gets called by the runtime. Use this method to add services to the container.
