@@ -19,25 +19,7 @@ namespace api
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-            .ConfigureAppConfiguration((hostingContext, config) =>
-            {
-                
-                config
-                .SetBasePath(hostingContext.HostingEnvironment.ContentRootPath)
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .AddJsonFile($"appsettings.{ hostingContext.HostingEnvironment.EnvironmentName}.json", optional: true);
-
-                if (Directory.Exists("/etc/secret-volume"))
-                {
-                    config.AddJsonFile("/etc/secret-volume/mysecretconfig", true);
-                    Console.WriteLine("/etc/secret-volume");
-                }
-
-                config.AddEnvironmentVariables();
-                
-               
-                config.AddCommandLine(args);
-            }).UseStartup<Startup>();
+            .UseStartup<Startup>();
            
     }
 }

@@ -17,7 +17,18 @@ namespace api
     {
         public Startup(IHostingEnvironment env)
         {
-            
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(env.ContentRootPath)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .AddJsonFile($"appsettings.{env.EnvironmentName}.json", optional: true);
+
+            if (Directory.Exists("/etc/secret-volume"))
+                builder.AddJsonFile("/etc/secret-volume/mysecretconfig", true);
+
+            builder.AddEnvironmentVariables();
+            Configuration = builder.Build();
+
+            Console.WriteLine(Configuration["MySecret"]);
         }
 
         public IConfigurationRoot Configuration { get; }
@@ -25,6 +36,7 @@ namespace api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton(Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
