@@ -36,13 +36,17 @@ namespace api
                 .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
                 .AddJsonFile($"appsettings.{ env.EnvironmentName}.json", optional: true);
 
-            if (Directory.Exists("/etc/secret-volume"))
+           if (Directory.Exists("/etc/secret-volume"))
+            {
                 builder.AddJsonFile("/etc/secret-volume/mysecretconfig", true);
+                Console.WriteLine("/etc/secret-volume");
+            }
 
             builder.AddEnvironmentVariables();
             Configuration = builder.Build();
 
             Console.WriteLine(Configuration["Secret"]);
+            Console.WriteLine(Configuration.ToString());
 
             app.UseMvc();
         }
